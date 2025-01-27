@@ -1,7 +1,7 @@
 # My Solution of The Gift Problem
-The description of the Gift problem does not state whether Ahmad can pack a
+The description of the Gift Problem does not state whether Ahmad can pack a
 single item multiple times into his backpack. I assume that this is allowed,
-but still give solution for both cases:
+but still give solution for both cases.
 ## My solution
 ### Estimated item volumes
 I estimated the item volumes with least square method.
