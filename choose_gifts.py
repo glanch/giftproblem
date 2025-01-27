@@ -35,16 +35,18 @@ for index, package in enumerate(packages):
     packages_dict[package_name] = package
     
 
+TOTAL_BACKPACK_SIZE = 40
+
 # Estimate volumes using Least Squares (LS) or Least Absolute Deviation (LAD)
 USE_LS = True
-USE_LAD = True
+USE_LAD = False
 
 if USE_LS:
     print("")
     print("Estimating item volumes with LS")
     estimated_volumes_ls = regress_ls(items_dict, packages_dict)
     print("Solving knapsack for LS")
-    optimal_objective_ls, packed_items_ls = solve_knapsack(items_dict, packages_dict, estimated_volumes_ls)
+    optimal_objective_ls, packed_items_ls = solve_knapsack(TOTAL_BACKPACK_SIZE, items_dict, packages_dict, estimated_volumes_ls)
     print_packed_items(packed_items_ls)
 
 if USE_LAD:
@@ -52,6 +54,5 @@ if USE_LAD:
     print("Estimating item volumes with LAD")
     estimated_volumes_lad = regress_lad(items_dict, packages_dict)
     print("Solving knapsack for LAD")
-    optimal_objective_lad, packed_items_lad = solve_knapsack(items_dict, packages_dict, estimated_volumes_lad)
+    optimal_objective_lad, packed_items_lad = solve_knapsack(TOTAL_BACKPACK_SIZE, items_dict, packages_dict, estimated_volumes_lad)
     print_packed_items(packed_items_lad)
-
