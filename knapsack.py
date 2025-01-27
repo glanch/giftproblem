@@ -12,7 +12,7 @@ def solve_knapsack(items_dict, packages_dict, estimated_volumes):
 
     knapsack_model.optimize()
     if knapsack_model.status == GRB.OPTIMAL:
-        print("Optimal solution for knapsack found!")
+        print("Optimal solution for knapsack found")
         
         actual_volume = 0
         actual_price = 0
@@ -30,7 +30,7 @@ def solve_knapsack(items_dict, packages_dict, estimated_volumes):
         print(f"Actual price: {actual_price}")
 
         optimal_objective  = knapsack_model.ObjVal
-        print(f"Optimal Objective: {optimal_objective}")
+        print(f"Optimal objective: {optimal_objective}")
         
         return optimal_objective, packed_items
 
