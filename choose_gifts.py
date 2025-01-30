@@ -1,8 +1,8 @@
 import json 
 
-from knapsack import solve_knapsack
 from regression.lad import regress_lad
 from regression.ls import regress_ls
+from knapsack import solve_knapsack
 
 def print_packed_items(packed_items):
     print("Packed items:")
@@ -22,7 +22,7 @@ for item in items:
     assert item_name not in items_dict
     items_dict[item_name] = item
 
-# Check for assumptions and process data 
+# Check for an assumption and process data 
 packages_dict = {}
 for index, package in enumerate(packages):
     for item_name in package["items"]:
