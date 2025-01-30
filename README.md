@@ -36,7 +36,7 @@ methods is less prone to be influenced by outliers.
 #### Formulation
 Let $M \in \mathbb{N}$ be the amount of packages, $N \in \mathbb{N}$ the amount of items. Furthermore, let $A \in \{0, 1\}^{M \times N}$ a binary matrix with $a_{ij} = 1$ iff. package $i$ contains item $j$ for entries $a_{ij} \in \{0, 1\}$ of $A$. Furthermore, let $b \in \mathbb{Q}_{\geq 0}^M$ the measured total volume of all packages.
 
-For each item $j$, the Least Square Problem contains a variable $x_j$ that indicates the volume of the item $j$ that is to be estimated. 
+For each item $j$, the Least Square Problem contains a non-negative continuous variable $x_j \in \mathbb{R}_{\geq{0}}$ that indicates the volume of the item $j$ that is to be estimated. 
 
 For each package $i$, the sum of the variables corresponding to the items of a package is equal to $b_i+\varepsilon_i$, whereas $\varepsilon_i$ depicts the error occured when the package $i$ was measured.
 
