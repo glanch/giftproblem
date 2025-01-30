@@ -40,7 +40,7 @@ For each item $j$, the Least Square Problem contains a variable $x_j$ that indic
 
 For each package $i$, the sum of the variables corresponding to the items of a package is equal to $b_i+\varepsilon_i$, whereas $\varepsilon_i$ depicts the error occured when the package $i$ was measured.
 
-The Least Square Problem consists of finding an assignment of all $x_j$ variables such that the squared deviation, i.e. $\sum_{i \in [M]} \varepsilon_i^2=(Ax-b)^2$, is minimized. This leads to the following non-linear objective:
+The Least Square Problem consists of finding an assignment of all $x_j$ variables such that the squared deviation, i.e. $\sum_{\text{package } i} \varepsilon_i^2=(Ax-b)^2$, is minimized. This leads to the following non-linear objective:
 $\min (Ax - b)^2$. A solution and therefore volume estimation of each item of the Least Square Problem minimizes this objective. 
 
 A solution gives a reasonably well volume estimation under the assumption that the error follows a normal distribution, has a constant variance and there are not too many outliers. The former applies, the latter is unknown. 
@@ -54,7 +54,7 @@ For source code, see [`regression/ls.py`](regression/ls.py).
 #### Formulation
 Most of the formulation of the Least Square method applies to Least Absolute
 Deviation Problem. Instead of minimizing the squared deviation, we instead minimize the
-absolute deviation: $\min_{\text{item } j} |\varepsilon_i| = \min_{\text{item}} |Ax - b|$.
+absolute deviation: $\min_{\text{item } j} |\varepsilon_i| = \min |Ax - b|$.
 
 #### Model
 I express the formulation of the Least Absolute Deviation Problem as a linear program.
