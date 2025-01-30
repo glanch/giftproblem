@@ -54,7 +54,7 @@ For source code, see [`regression/ls.py`](regression/ls.py).
 #### Formulation
 Most of the formulation of the Least Square method applies to Least Absolute
 Deviation Problem. Instead of minimizing the squared deviation, we instead minimize the
-absolute deviation: $\min_{\text{item } j} | \varepsilon_i | = \min_{\text{item} |Ax - b|}$.
+absolute deviation: $\min_{\text{item } j} |\varepsilon_i| = \min_{\text{item}} |Ax - b|$.
 
 #### Model
 I express the formulation of the Least Absolute Deviation Problem as a linear program.
