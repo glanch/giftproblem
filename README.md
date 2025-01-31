@@ -34,14 +34,14 @@ methods is less prone to be influenced by outliers.
 
 ### Method 1: Least Square
 #### Formulation
-Let $M \in \mathbb{N}$ be the amount of packages, $N \in \mathbb{N}$ the amount of items. Furthermore, let $A \in \{0, 1\}^{M \times N}$ a binary matrix with $a_{ij} = 1$ iff. package $i$ contains item $j$ for entries $a_{ij} \in \{0, 1\}$ of $A$. Furthermore, let $b \in \mathbb{Q}_{\geq 0}^M$ the measured total volume of all packages.
+Let $`M \in \mathbb{N}`$ be the amount of packages, $`N \in \mathbb{N}`$ the amount of items. Furthermore, let $`A \in \{0, 1\}^{M \times N}`$ a binary matrix with $`a_{ij} = 1`$ iff. package $`i`$ contains item $`j`$ for entries $`a_{ij} \in \{0, 1\}`$ of $`A`$. Furthermore, let $`b \in \mathbb{Q}_{\geq 0}^M`$ the measured total volume of all packages.
 
-For each item $j$, the Least Square Problem contains a non-negative continuous variable $x_j \in \mathbb{R}_{\geq{0}}$ that indicates the volume of the item $j$ that is to be estimated. 
+For each item $`j`$, the Least Square Problem contains a non-negative continuous variable $`x_j \in \mathbb{R}_{\geq{0}}`$ that indicates the volume of the item $`j`$ that is to be estimated. 
 
-For each package $i$, the sum of the variables corresponding to the items of a package is equal to $b_i+\varepsilon_i$, whereas $\varepsilon_i$ depicts the error occured when the package $i$ was measured.
+For each package $`i`$, the sum of the variables corresponding to the items of a package is equal to $`b_i+\varepsilon_i`$, whereas $`\varepsilon_i`$ depicts the error occured when the package $`i`$ was measured.
 
-The Least Square Problem consists of finding an assignment of all $x_j$ variables such that the squared deviation, i.e. $\sum_{\text{package } i} \varepsilon_i^2=(Ax-b)^2$, is minimized. This leads to the following non-linear objective:
-$\min (Ax - b)^2$. A solution and therefore volume estimation of each item of the Least Square Problem minimizes this objective. 
+The Least Square Problem consists of finding an assignment of all $`x_j`$ variables such that the squared deviation, i.e. $`\sum_{\text{package } i} \varepsilon_i^2=(Ax-b)^2`$, is minimized. This leads to the following non-linear objective:
+$`\min (Ax - b)^2`$. A solution and therefore volume estimation of each item of the Least Square Problem minimizes this objective. 
 
 A solution gives a reasonably well volume estimation under the assumption that the error follows a normal distribution, has a constant variance and there are not too many outliers. The former applies, the latter is unknown. 
 On a theoretical note, this works because maximum likelihood estimation of a normal distributed error is the least square estimation.
@@ -54,12 +54,12 @@ For source code, see [`regression/ls.py`](regression/ls.py).
 #### Formulation
 Most of the formulation of the Least Square method applies to Least Absolute
 Deviation Problem. Instead of minimizing the squared deviation, we instead minimize the
-absolute deviation: $\min_{\text{item } j} |\varepsilon_i| = \min |Ax - b|$.
+absolute deviation: $`\min_{\text{item } j} |\varepsilon_i| = \min |Ax - b|`$.
 
 #### Model
 I express the formulation of the Least Absolute Deviation Problem as a linear program.
-I introduce non-negative continuous variables $x_j \in \mathbb{R}_{\geq 0}$ for every item $j$ that indicate the estimated volume of item $j$. I linearize the formulated objective function by introducing non-negative continuous error slack variables $e_i^{+} \in \mathbb{R}_{\geq 0}$ and $e_i^{-} \in \mathbb{R}_{\geq 0}$ such that the value of the expression $e_i^{+} - e_i^{-}$ precisely captures the occured error $\varepsilon_i$ when the volume of package $i$ was measured as $b_i$. For this, I introduce a linear constraint for each package $i$ that expresses exactly this. Given the set $\mathcal{J}_i$ of items of a package $i$, the following constraint is added to the model: $\sum_{i \in \mathcal{J}_{i}} x_j + e_i^{+} - e_i^{-} = b_i$. 
-Then, a linear objective function that minimizes the cumulated absolute deviations corresponds to $\min \sum_{\text{package } i} e_i^{+} + e_i^{-}$. 
+I introduce non-negative continuous variables $`x_j \in \mathbb{R}_{\geq 0}`$ for every item $`j`$ that indicate the estimated volume of item $`j`$. I linearize the formulated objective function by introducing non-negative continuous error slack variables $`e_i^{+} \in \mathbb{R}_{\geq 0}`$ and $`e_i^{-} \in \mathbb{R}_{\geq 0}`$ such that the value of the expression $`e_i^{+} - e_i^{-}`$ precisely captures the occured error $`\varepsilon_i`$ when the volume of package $`i`$ was measured as $`b_i`$. For this, I introduce a linear constraint for each package $`i`$ that expresses exactly this. Given the set $`\mathcal{J}_i`$ of items of a package $`i`$, the following constraint is added to the model: $`\sum_{i \in \mathcal{J}_{i}} x_j + e_i^{+} - e_i^{-} = b_i`$. 
+Then, a linear objective function that minimizes the cumulated absolute deviations corresponds to $`\min \sum_{\text{package } i} e_i^{+} + e_i^{-}`$. 
 
 This yields an LP that can be solved by any off-the-shelf LP solver
 
@@ -71,13 +71,13 @@ For source code, see [`regression/lad.py`](regression/lad.py).
 Optimally packing Ahmad's backpack without exceeding the capacity and maximizing profit / item cost is a Knapsack problem. 
 
 #### Model
-Given estimated item volumes $w_j$ for each item $j$. Furthermore, let $W=40$
-denote the backpack size and let $c_j$ denote the price of an item $j$. 
+Given estimated item volumes $`w_j`$ for each item $`j`$. Furthermore, let $`W=40`$
+denote the backpack size and let $`c_j`$ denote the price of an item $`j`$. 
 
-I introduce a non-negative integer variable $y_j \in \mathbb{Z}_{\geq 0}$ that indicates how many pieces of item $j$ are packed into Ahmad's backpack. If 
-Ahmad cannot pick an item more than once, $y_j$ is limited to a boolean value $\{0, 1\}$-
-It should hold that the backpack's volume is not exceeded with very high probability. Therefore I introduce the linear knapsack constraint that models this given the estimated item volumes $w_j$: $\sum_{\text{item } j} w_j \cdot y_j \leq W$. 
-The objective of the model maximizes the price of all packed items. Therefore, the linear objective is $\max \sum_{\text{item } j} c_j \cdot y_j$
+I introduce a non-negative integer variable $`y_j \in \mathbb{Z}_{\geq 0}`$ that indicates how many pieces of item $`j`$ are packed into Ahmad's backpack. If 
+Ahmad cannot pick an item more than once, $`y_j`$ is limited to a boolean value $`\{0, 1\}`$-
+It should hold that the backpack's volume is not exceeded with very high probability. Therefore I introduce the linear knapsack constraint that models this given the estimated item volumes $`w_j`$: $`\sum_{\text{item } j} w_j \cdot y_j \leq W`$. 
+The objective of the model maximizes the price of all packed items. Therefore, the linear objective is $`\max \sum_{\text{item } j} c_j \cdot y_j`$
 
 In total, this model is a Mixed-Integer Linear Program and is solved with B&C. 
 
